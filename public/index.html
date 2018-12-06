@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script>
+        var worker = null
+        function start() {
+            if (typeof (Worker) !== "undefined") {
+                //alert("支持Web worker!!!")
+
+                //创建worker对象
+                var time = new Worker("./javascripts/time.js");
+                //​接受worker返回的消息,并且显示到页面上
+                time.onmessage = function (event) {
+                    document.getElementById("result").innerHTML = event.data
+                }
+                worker = time
+
+            } else {
+                alert("不支持Web worker!!!")
+            }
+        }
+
+        function stop() {
+            //终止worker线程
+            worker.terminate()
+            worker = null
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h1>web worker实例</h1>
+        <button onclick="start()">开始</button>
+        <button onclick="stop()">结束</button>
+        <div id="result">
+
+        </div>
+    </div>
+</body>
+
+</html>
